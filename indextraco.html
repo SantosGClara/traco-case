@@ -1,0 +1,1558 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Traço — Case Study</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+
+:root {
+  --coral:      #D95F45;
+  --coral-light:#F5EDE9;
+  --coral-mid:  #E8967F;
+  --navy:       #1C2B4A;
+  --navy-mid:   #2E3F62;
+  --navy-light: #E8EBF2;
+  --areia:      #E8DDD0;
+  --areia-deep: #A8907A;
+  --off:        #F7F4F0;
+  --border:     #E2DDD6;
+  --dark:       #0C0E14;
+  --surface:    #131720;
+  --surface2:   #1A1F2E;
+  --surface3:   #212840;
+  --muted:      #6B7294;
+  --text:       #EEF0F8;
+  --bd:         rgba(255,255,255,0.07);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: #090B11;
+  font-family: 'Outfit', sans-serif;
+  color: var(--text);
+  overflow-x: hidden;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 40px; height: 56px;
+  background: rgba(9,11,17,0.88);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.nav-logo {
+  font-family: 'DM Serif Display', serif;
+  font-size: 20px; color: var(--text);
+  letter-spacing: -0.3px;
+}
+.nav-logo em { color: var(--coral); font-style: italic; }
+
+.nav-links { display: flex; gap: 28px; }
+.nav-links a {
+  font-size: 11px; font-weight: 600;
+  text-decoration: none; color: var(--muted);
+  text-transform: uppercase; letter-spacing: 1px;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--coral); }
+
+/* ── SECTIONS ── */
+section {
+  padding: 100px 40px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+section.full { max-width: 100%; padding: 100px 0; }
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  text-align: center;
+  padding: 80px 40px;
+  position: relative; overflow: hidden;
+}
+
+.hero-bg {
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 80% 60% at 50% 40%, #1a1f35 0%, #090B11 65%);
+  z-index: 0;
+}
+
+.hero-deco {
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 0; opacity: 0.04;
+}
+
+.hero-content { position: relative; z-index: 1; }
+
+.hero-eyebrow {
+  font-size: 10px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 3px;
+  color: var(--coral); margin-bottom: 20px;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+}
+.hero-eyebrow::before,
+.hero-eyebrow::after {
+  content: ''; width: 32px; height: 1px;
+  background: var(--coral); opacity: 0.4;
+}
+
+.hero-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 80px; color: var(--text);
+  letter-spacing: -3px; line-height: 1;
+  margin-bottom: 8px;
+}
+.hero-title em { color: var(--coral); font-style: italic; }
+
+.hero-tagline {
+  font-family: 'DM Serif Display', serif;
+  font-style: italic; font-weight: 400;
+  font-size: 22px; color: rgba(238,240,248,0.45);
+  margin-bottom: 40px;
+}
+
+.hero-tags {
+  display: flex; gap: 8px; justify-content: center;
+  flex-wrap: wrap; margin-bottom: 48px;
+}
+.htag {
+  font-size: 10px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.8px;
+  padding: 5px 12px; border-radius: 20px; border: 1px solid;
+}
+.htag.coral { border-color: rgba(217,95,69,0.3); color: var(--coral); background: rgba(217,95,69,0.08); }
+.htag.navy  { border-color: rgba(46,63,98,0.5); color: #7A8FCC; background: rgba(28,43,74,0.2); }
+.htag.muted { border-color: rgba(255,255,255,0.1); color: var(--muted); background: rgba(255,255,255,0.04); }
+
+.hero-meta {
+  display: flex; gap: 32px; justify-content: center;
+  flex-wrap: wrap;
+}
+.hm-item { text-align: center; }
+.hm-label { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); margin-bottom: 4px; }
+.hm-val { font-size: 14px; font-weight: 600; color: var(--text); }
+
+/* ── SECTION HEADERS ── */
+.sec-eyebrow {
+  font-size: 10px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 2px;
+  color: var(--coral); margin-bottom: 8px;
+}
+.sec-title {
+  font-family: 'DM Serif Display', serif;
+  font-style: italic; font-weight: 400;
+  font-size: 36px; letter-spacing: -1px;
+  color: var(--text); margin-bottom: 10px;
+}
+.sec-sub {
+  font-size: 14px; color: var(--muted);
+  line-height: 1.7; max-width: 560px;
+  margin-bottom: 48px;
+}
+
+.divider { width: 100%; height: 1px; background: rgba(255,255,255,0.05); }
+
+/* ── PROBLEMA CARDS ── */
+.problem-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 2px; border-radius: 20px; overflow: hidden;
+  margin-bottom: 32px;
+}
+.problem-card {
+  padding: 32px 28px;
+  display: flex; flex-direction: column; gap: 12px;
+}
+.pc-cliente { background: var(--surface2); }
+.pc-arq     { background: #130e1a; }
+
+.pc-icon { font-size: 28px; }
+.pc-title {
+  font-family: 'DM Serif Display', serif;
+  font-style: italic; font-size: 22px; letter-spacing: -0.5px;
+}
+.pc-cliente .pc-title { color: var(--coral); }
+.pc-arq     .pc-title { color: #9A8FD0; }
+.pc-desc { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+/* ── STAT BAND ── */
+.stat-band {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 2px; border-radius: 20px; overflow: hidden;
+  margin-bottom: 48px;
+}
+.stat-box {
+  padding: 28px 24px;
+  background: var(--surface2);
+  display: flex; flex-direction: column; gap: 6px;
+}
+.stat-val {
+  font-family: 'DM Serif Display', serif;
+  font-size: 44px; line-height: 1; letter-spacing: -2px;
+}
+.sv-coral { color: var(--coral); }
+.sv-navy  { color: #7A8FCC; }
+.sv-areia { color: var(--areia); }
+.sv-green { color: #4DB88A; }
+.stat-label { font-size: 12px; color: var(--muted); line-height: 1.4; }
+
+/* ── PERSONAS ── */
+.personas-row {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+.persona-card {
+  border-radius: 18px; overflow: hidden;
+  border: 1px solid var(--bd);
+}
+.persona-top {
+  padding: 24px 20px 20px;
+  display: flex; flex-direction: column;
+  align-items: center; gap: 8px; text-align: center;
+}
+.persona-avatar {
+  width: 56px; height: 56px; border-radius: 16px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'DM Serif Display', serif;
+  font-size: 22px; font-style: italic;
+  font-weight: 400; color: white; margin-bottom: 4px;
+}
+.pa-coral { background: var(--coral); }
+.pa-navy  { background: var(--navy); }
+
+.persona-name {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700; font-size: 16px; color: var(--text);
+}
+.persona-role { font-size: 11px; color: var(--muted); font-weight: 500; }
+.persona-need {
+  font-family: 'DM Serif Display', serif;
+  font-style: italic; font-size: 13px;
+  color: rgba(238,240,248,0.55);
+  padding: 12px 20px;
+  border-top: 1px solid var(--bd);
+  line-height: 1.5; text-align: center;
+}
+.persona-body {
+  padding: 0 20px 20px;
+  display: flex; flex-direction: column; gap: 8px;
+}
+.persona-item { padding: 10px 12px; border-radius: 10px; }
+.pi-pain { background: rgba(217,95,69,0.08); border: 1px solid rgba(217,95,69,0.15); }
+.pi-gain { background: rgba(77,184,138,0.08); border: 1px solid rgba(77,184,138,0.15); }
+.pi-label {
+  font-size: 9px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 4px;
+}
+.pi-pain .pi-label { color: var(--coral); }
+.pi-gain .pi-label { color: #4DB88A; }
+.pi-text { font-size: 11px; color: rgba(238,240,248,0.65); line-height: 1.5; }
+
+/* ── TYPOGRAPHY ── */
+.typo-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 14px; margin-bottom: 32px;
+}
+.typo-card {
+  border-radius: 18px; padding: 28px;
+  border: 1px solid var(--bd);
+  background: var(--surface2);
+}
+.typo-sample {
+  margin-bottom: 16px; padding-bottom: 16px;
+  border-bottom: 1px solid var(--bd);
+}
+.ts-serif {
+  font-family: 'DM Serif Display', serif;
+  font-style: italic; font-size: 44px;
+  color: var(--text); letter-spacing: -1.5px; line-height: 1;
+}
+.ts-serif em { color: var(--coral); }
+.ts-outfit {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 600; font-size: 38px;
+  color: var(--text); letter-spacing: -1.5px; line-height: 1;
+}
+.typo-name { font-weight: 700; font-size: 14px; color: var(--text); margin-bottom: 3px; }
+.typo-sub  { font-size: 11px; color: var(--muted); margin-bottom: 12px; }
+.typo-roles { display: flex; flex-wrap: wrap; gap: 6px; }
+.trole {
+  font-size: 9px; font-weight: 700;
+  padding: 3px 8px; border-radius: 20px;
+  text-transform: uppercase; letter-spacing: 0.4px;
+}
+.tr-coral { background: rgba(217,95,69,0.12); color: var(--coral); }
+.tr-navy  { background: rgba(28,43,74,0.3); color: #7A8FCC; }
+.tr-muted { background: rgba(255,255,255,0.06); color: var(--muted); }
+
+.typo-scale {
+  margin-top: 28px; padding: 24px 28px;
+  border-radius: 18px; background: var(--surface);
+  border: 1px solid var(--bd);
+}
+.ts-row {
+  display: flex; align-items: baseline; gap: 16px;
+  padding: 10px 0; border-bottom: 1px solid var(--bd);
+}
+.ts-row:last-child { border: none; padding-bottom: 0; }
+.ts-size { font-size: 10px; font-weight: 700; color: var(--muted); width: 48px; flex-shrink: 0; }
+.ts-samp-serif { font-family: 'DM Serif Display', serif; }
+.ts-samp-out   { font-family: 'Outfit', sans-serif; }
+.ts-role-tag {
+  margin-left: auto; font-size: 9px; font-weight: 700;
+  padding: 2px 7px; border-radius: 4px;
+  background: rgba(217,95,69,0.1); color: var(--coral);
+  text-transform: uppercase; letter-spacing: 0.4px; white-space: nowrap;
+}
+
+/* ── COLORS ── */
+.color-row {
+  display: flex; gap: 12px; margin-bottom: 32px;
+  flex-wrap: wrap;
+}
+.color-chip {
+  border-radius: 16px; overflow: hidden;
+  flex: 1; min-width: 140px;
+  border: 1px solid rgba(255,255,255,0.06);
+}
+.cc-swatch { height: 80px; }
+.cc-info { padding: 14px; background: var(--surface2); }
+.cc-name { font-weight: 700; font-size: 13px; color: var(--text); margin-bottom: 2px; }
+.cc-hex  { font-size: 11px; color: var(--muted); font-family: monospace; margin-bottom: 6px; }
+.cc-role { font-size: 11px; color: var(--muted); line-height: 1.4; }
+
+/* ── PHONES ── */
+.phones-scroll {
+  padding: 60px 40px;
+  display: flex; gap: 24px;
+  overflow-x: auto; scrollbar-width: none;
+  justify-content: center; flex-wrap: wrap;
+  align-items: flex-start;
+}
+.phones-scroll::-webkit-scrollbar { display: none; }
+
+.pw { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+
+.phone {
+  width: 200px; height: 410px;
+  border-radius: 28px;
+  position: relative; overflow: hidden;
+  border: 1.5px solid rgba(255,255,255,0.1);
+  box-shadow: 0 24px 56px rgba(217,95,69,0.12);
+  flex-shrink: 0;
+}
+
+.notch {
+  position: absolute; top: 9px; left: 50%;
+  transform: translateX(-50%);
+  width: 64px; height: 16px; border-radius: 16px;
+  z-index: 10; background: #06080E;
+}
+
+.scr {
+  width: 100%; height: 100%; overflow: hidden;
+  display: flex; flex-direction: column; padding-top: 34px;
+}
+
+/* STATUS BAR */
+.sb { display: flex; justify-content: space-between; padding: 0 14px 4px; font-size: 7px; font-weight: 600; }
+.sb-d { background: var(--navy); color: rgba(255,255,255,0.4); }
+.sb-l { background: var(--off); color: var(--areia-deep); }
+.sb-w { background: #FFFFFF; color: var(--areia-deep); }
+
+.plbl {
+  font-size: 9px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 1px;
+  color: #3a3a55;
+}
+
+/* ── SCREEN: ENTRADA ── */
+.entrada-bg {
+  flex: 1; background: var(--navy);
+  display: flex; flex-direction: column;
+  padding: 16px 14px 14px;
+  position: relative; overflow: hidden;
+}
+.entrada-bg::before {
+  content: ''; position: absolute;
+  top: -40px; right: -40px;
+  width: 160px; height: 160px; border-radius: 50%;
+  background: rgba(217,95,69,0.06);
+}
+.ent-logo {
+  font-family: 'DM Serif Display', serif;
+  font-size: 22px; color: #fff; margin-bottom: 32px;
+}
+.ent-logo em { color: var(--coral); font-style: italic; }
+.ent-eyebrow { font-size: 8px; color: rgba(255,255,255,0.35); letter-spacing: 0.08em; margin-bottom: 6px; font-weight: 500; }
+.ent-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 20px; color: #fff; line-height: 1.2;
+  margin-bottom: 40px;
+}
+.ent-title em { color: var(--coral); font-style: italic; }
+.ent-btn {
+  background: var(--coral); color: #fff;
+  font-family: 'Outfit', sans-serif;
+  font-size: 10px; font-weight: 600;
+  padding: 9px 0; border-radius: 9px;
+  text-align: center; margin-bottom: 6px;
+}
+.ent-btn2 {
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.5);
+  font-family: 'Outfit', sans-serif;
+  font-size: 10px; font-weight: 500;
+  padding: 8px 0; border-radius: 9px; text-align: center;
+}
+.ent-legal {
+  margin-top: 10px;
+  font-size: 7px; color: rgba(255,255,255,0.2);
+  text-align: center; line-height: 1.4;
+}
+
+/* ── SCREEN: HOME ── */
+.home-hdr {
+  background: var(--navy);
+  padding: 10px 14px 14px;
+  border-radius: 0 0 16px 16px;
+}
+.hh-logo {
+  font-family: 'DM Serif Display', serif;
+  font-size: 14px; color: #fff; margin-bottom: 10px;
+}
+.hh-logo em { color: var(--coral); font-style: italic; }
+.hh-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 13px; color: #fff; line-height: 1.3; margin-bottom: 8px;
+}
+.hh-title em { color: var(--coral); font-style: italic; }
+.hh-search {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px; padding: 6px 10px;
+  font-size: 8px; color: rgba(255,255,255,0.3);
+  font-family: 'Outfit', sans-serif;
+}
+.home-body { flex: 1; padding: 10px 14px; background: #F7F4F0; overflow: hidden; }
+.hb-filters { display: flex; gap: 5px; margin-bottom: 10px; overflow: hidden; }
+.hbf {
+  font-size: 7px; font-weight: 600;
+  padding: 3px 8px; border-radius: 10px;
+  border: 1px solid #E2DDD6; background: #fff;
+  color: #6B6762; white-space: nowrap;
+}
+.hbf.on { background: var(--coral); border-color: var(--coral); color: #fff; }
+.hb-sec {
+  font-family: 'DM Serif Display', serif;
+  font-size: 11px; color: #1A1917; margin-bottom: 7px;
+}
+.hb-cards { display: flex; gap: 6px; margin-bottom: 10px; }
+.hb-card {
+  flex: 1; border-radius: 9px; overflow: hidden;
+  border: 1px solid #E2DDD6; background: #fff;
+}
+.hbc-img {
+  height: 44px; display: flex; align-items: center; justify-content: center;
+  font-family: 'DM Serif Display', serif; font-size: 13px; font-style: italic;
+}
+.hci-a { background: linear-gradient(135deg, #DDD0C0, #C4A888); color: #7A5C40; }
+.hci-b { background: linear-gradient(135deg, #C8D4DC, #A4B8C8); color: #3A5260; }
+.hci-c { background: linear-gradient(135deg, #D8CECC, #BEA8A4); color: #6A4840; }
+.hbc-info { padding: 5px 6px; }
+.hbc-name { font-size: 7px; font-weight: 700; color: #1A1917; }
+.hbc-spec { font-size: 6px; color: #A8A49F; }
+.hb-list { display: flex; flex-direction: column; gap: 6px; }
+.hbl-item {
+  display: flex; align-items: center; gap: 7px;
+  padding: 7px 8px; border-radius: 9px;
+  background: #fff; border: 1px solid #E2DDD6;
+}
+.hbl-av {
+  width: 28px; height: 28px; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'DM Serif Display', serif; font-size: 12px; font-style: italic;
+  flex-shrink: 0;
+}
+.hbl-av-a { background: #E8DDD0; color: #A8907A; }
+.hbl-av-b { background: #E8EBF2; color: #1C2B4A; }
+.hbl-info { flex: 1; }
+.hbl-name { font-size: 8px; font-weight: 700; color: #1A1917; }
+.hbl-spec { font-size: 7px; color: #A8A49F; }
+.hbl-price { font-size: 7px; font-weight: 600; color: var(--coral); text-align: right; line-height: 1.3; }
+
+/* ── SCREEN: PERFIL ── */
+.perf-cover {
+  height: 60px;
+  background: linear-gradient(135deg, var(--navy), #2E3F62);
+  position: relative;
+}
+.perf-av {
+  position: absolute; bottom: -18px; left: 14px;
+  width: 38px; height: 38px; border-radius: 11px;
+  background: var(--coral); border: 2.5px solid #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'DM Serif Display', serif;
+  font-size: 16px; font-style: italic; color: #fff;
+}
+.perf-body { flex: 1; padding: 24px 14px 10px; background: #fff; overflow: hidden; }
+.perf-name {
+  font-family: 'DM Serif Display', serif;
+  font-size: 13px; color: var(--navy); margin-bottom: 1px;
+}
+.perf-spec { font-size: 8px; color: #A8A49F; margin-bottom: 7px; }
+.perf-tags { display: flex; gap: 4px; margin-bottom: 8px; flex-wrap: wrap; }
+.perf-tag {
+  font-size: 7px; font-weight: 600;
+  padding: 2px 7px; border-radius: 5px;
+}
+.pt-n { background: #E8EBF2; color: var(--navy); }
+.pt-a { background: #E8DDD0; color: #A8907A; }
+.pt-c { background: #F5EDE9; color: var(--coral); }
+.perf-rating {
+  display: flex; align-items: center; gap: 8px;
+  background: #F7F4F0; border-radius: 9px;
+  padding: 7px 9px; margin-bottom: 8px;
+}
+.perf-r-big {
+  font-family: 'DM Serif Display', serif;
+  font-size: 20px; color: #1A1917;
+}
+.perf-r-stars { font-size: 9px; color: var(--coral); margin-bottom: 1px; }
+.perf-r-count { font-size: 7px; color: #A8A49F; }
+.perf-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; margin-bottom: 8px; }
+.pg-item { border-radius: 7px; overflow: hidden; border: 1px solid #E2DDD6; }
+.pg-img { height: 38px; }
+.pgi-a { background: linear-gradient(135deg, #E0D4C4, #C8B89A); }
+.pgi-b { background: linear-gradient(135deg, #C4D0D8, #A0B8C8); }
+.pgi-c { background: linear-gradient(135deg, #D8D0C8, #C0B0A0); }
+.pgi-d { background: linear-gradient(135deg, #C4D0C4, #A4B8A4); }
+.pg-lbl { padding: 4px 5px; background: #fff; font-size: 7px; font-weight: 600; color: #1A1917; }
+.perf-btn {
+  background: var(--coral); color: #fff;
+  font-family: 'Outfit', sans-serif;
+  font-size: 9px; font-weight: 600;
+  padding: 8px 0; border-radius: 8px; text-align: center;
+}
+
+/* ── SCREEN: ORÇAMENTO ── */
+.orc-hdr {
+  background: #fff; padding: 8px 14px;
+  border-bottom: 1px solid #E2DDD6;
+}
+.orc-arch-row { display: flex; align-items: center; gap: 6px; margin-bottom: 6px; }
+.orc-av {
+  width: 24px; height: 24px; border-radius: 7px;
+  background: #E8DDD0; color: #A8907A;
+  font-family: 'DM Serif Display', serif;
+  font-size: 10px; font-style: italic;
+  display: flex; align-items: center; justify-content: center;
+}
+.orc-name {
+  font-family: 'DM Serif Display', serif;
+  font-size: 12px; color: var(--navy);
+}
+.orc-badge {
+  margin-left: auto; font-size: 7px; font-weight: 600;
+  padding: 2px 6px; border-radius: 5px;
+  background: #E3F5EE; color: #1A7A54;
+}
+.orc-steps { display: flex; align-items: center; gap: 0; }
+.orc-sc {
+  width: 16px; height: 16px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 7px; font-weight: 700;
+}
+.osc-done { background: var(--coral); color: #fff; }
+.osc-act  { background: var(--navy); color: #fff; }
+.osc-todo { background: #E2DDD6; color: #A8A49F; }
+.orc-sl { flex: 1; height: 1px; max-width: 12px; }
+.osl-done { background: var(--coral); }
+.osl-off  { background: #E2DDD6; }
+.orc-body { flex: 1; padding: 10px 14px; background: #F7F4F0; overflow: hidden; }
+.ob-sec {
+  font-family: 'DM Serif Display', serif;
+  font-size: 10px; color: var(--navy); margin-bottom: 7px;
+}
+.ob-pills { display: flex; gap: 4px; flex-wrap: wrap; margin-bottom: 8px; }
+.ob-pill {
+  font-size: 7px; font-weight: 600;
+  padding: 3px 8px; border-radius: 10px;
+  border: 1px solid #E2DDD6; background: #fff; color: #6B6762;
+}
+.ob-pill.sel  { background: var(--navy); border-color: var(--navy); color: #fff; }
+.ob-pill.sel2 { background: #F5EDE9; border-color: var(--coral); color: var(--coral); }
+.ob-field {
+  background: #fff; border: 1px solid #E2DDD6;
+  border-radius: 7px; padding: 5px 8px;
+  margin-bottom: 5px; font-size: 8px; color: #6B6762;
+}
+.ob-field.act { border-color: var(--coral); }
+.ob-textarea {
+  background: #fff; border: 1px solid #E2DDD6;
+  border-radius: 7px; padding: 5px 8px;
+  font-size: 7px; color: #6B6762;
+  min-height: 30px; margin-bottom: 8px; line-height: 1.5;
+}
+.ob-btn {
+  background: var(--coral); color: #fff;
+  font-family: 'Outfit', sans-serif;
+  font-size: 9px; font-weight: 600;
+  padding: 8px 0; border-radius: 8px; text-align: center;
+}
+
+/* ── SCREEN: PAINEL ── */
+.pain-hdr {
+  background: var(--navy);
+  padding: 10px 14px 14px;
+  border-radius: 0 0 16px 16px;
+}
+.pain-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+.pain-hi { font-size: 7px; color: rgba(255,255,255,0.35); margin-bottom: 2px; }
+.pain-name {
+  font-family: 'DM Serif Display', serif;
+  font-size: 14px; color: #fff;
+}
+.pain-av {
+  width: 28px; height: 28px; border-radius: 50%;
+  background: var(--coral); color: #fff;
+  font-family: 'DM Serif Display', serif;
+  font-size: 12px; font-style: italic;
+  display: flex; align-items: center; justify-content: center;
+  border: 2px solid rgba(255,255,255,0.2);
+}
+.pain-stats { display: grid; grid-template-columns: repeat(3,1fr); gap: 6px; }
+.pain-stat {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 9px; padding: 8px 5px; text-align: center;
+}
+.ps-val {
+  font-family: 'DM Serif Display', serif;
+  font-size: 18px; color: #fff; line-height: 1;
+}
+.ps-val.c { color: var(--coral); }
+.ps-val.a { color: #D4C4A8; }
+.ps-lbl { font-size: 6px; color: rgba(255,255,255,0.3); text-transform: uppercase; letter-spacing: 0.05em; margin-top: 2px; }
+.pain-body { flex: 1; padding: 10px 14px; background: #F7F4F0; overflow: hidden; }
+.pb-sec {
+  font-family: 'DM Serif Display', serif;
+  font-size: 10px; color: #1A1917; margin-bottom: 7px;
+}
+.pb-proj {
+  background: #fff; border: 1px solid #E2DDD6;
+  border-radius: 9px; padding: 8px 9px;
+  margin-bottom: 5px; display: flex; align-items: center; gap: 7px;
+}
+.pb-proj-ic {
+  width: 26px; height: 26px; border-radius: 7px;
+  flex-shrink: 0; display: flex; align-items: center; justify-content: center;
+  font-size: 11px;
+}
+.pic-c { background: #F5EDE9; }
+.pic-n { background: #E8EBF2; }
+.pic-a { background: #E8DDD0; }
+.pb-proj-info { flex: 1; }
+.pb-pn { font-size: 8px; font-weight: 700; color: #1A1917; }
+.pb-pd { font-size: 7px; color: #A8A49F; }
+.pb-badge {
+  font-size: 7px; font-weight: 700;
+  padding: 2px 6px; border-radius: 5px;
+}
+.pbg-g { background: #E3F5EE; color: #1A7A54; }
+.pbg-c { background: #F5EDE9; color: var(--coral); }
+.pbg-a { background: #E8DDD0; color: #A8907A; }
+.pb-review {
+  padding: 7px 0; border-bottom: 1px solid #E2DDD6;
+}
+.pb-review:last-child { border: none; }
+.pb-rv-top { display: flex; justify-content: space-between; margin-bottom: 3px; }
+.pb-rv-name { font-size: 8px; font-weight: 600; color: #1A1917; }
+.pb-rv-stars { font-size: 8px; color: var(--coral); }
+.pb-rv-text { font-size: 7px; color: #6B6762; line-height: 1.4; }
+
+/* ── SCREEN: CONFIRMAÇÃO ── */
+.conf-body {
+  flex: 1; padding: 24px 14px 14px;
+  background: #F7F4F0; display: flex;
+  flex-direction: column; align-items: center; text-align: center;
+  overflow: hidden;
+}
+.conf-icon {
+  width: 48px; height: 48px; border-radius: 50%;
+  background: #E3F5EE; display: flex;
+  align-items: center; justify-content: center;
+  font-size: 20px; margin: 0 auto 12px;
+}
+.conf-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 14px; color: var(--navy); margin-bottom: 5px;
+}
+.conf-sub { font-size: 8px; color: #6B6762; line-height: 1.5; margin-bottom: 14px; }
+.conf-tl { width: 100%; text-align: left; }
+.conf-tl-item { display: flex; align-items: center; gap: 7px; margin-bottom: 8px; }
+.conf-tl-dot {
+  width: 20px; height: 20px; border-radius: 50%; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center; font-size: 9px;
+}
+.ctd-g { background: #E3F5EE; }
+.ctd-w { background: #E8DDD0; }
+.conf-tl-text { font-size: 8px; color: #6B6762; line-height: 1.3; }
+.conf-tl-text strong { color: #1A1917; font-weight: 600; }
+.conf-btn {
+  width: 100%; background: var(--coral); color: #fff;
+  font-family: 'Outfit', sans-serif;
+  font-size: 9px; font-weight: 600;
+  padding: 9px 0; border-radius: 8px; text-align: center; margin-top: 12px;
+}
+
+/* ── BOTTOM NAV ── */
+.bnv {
+  display: flex; justify-content: space-around; align-items: center;
+  padding: 7px 10px 12px;
+  border-top: 1px solid #E2DDD6; background: #fff;
+}
+.ni { display: flex; flex-direction: column; align-items: center; gap: 2px; font-size: 6px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.3px; color: #A8A49F; }
+.ni.on { color: var(--coral) !important; }
+.nii { font-size: 13px; }
+.ndot { width: 4px; height: 4px; border-radius: 50%; background: var(--coral); margin-top: 1px; }
+
+/* ── FLUXO ── */
+.flow-section {
+  padding: 60px 40px;
+  background: var(--surface2);
+}
+.flow-inner {
+  max-width: 1100px; margin: 0 auto;
+}
+.flow-diagram {
+  display: flex; align-items: center; gap: 0;
+  overflow-x: auto; scrollbar-width: none;
+  padding: 24px 0;
+}
+.flow-diagram::-webkit-scrollbar { display: none; }
+.flow-node {
+  flex-shrink: 0; text-align: center;
+  display: flex; flex-direction: column; align-items: center;
+}
+.fn-box {
+  width: 120px; padding: 14px 12px;
+  border-radius: 14px; margin-bottom: 8px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 11px; font-weight: 600;
+  line-height: 1.3;
+}
+.fn-coral { background: rgba(217,95,69,0.15); border: 1px solid rgba(217,95,69,0.3); color: var(--coral); }
+.fn-navy  { background: rgba(28,43,74,0.4); border: 1px solid rgba(46,63,98,0.5); color: #7A8FCC; }
+.fn-brown { background: rgba(139,94,60,0.15); border: 1px solid rgba(139,94,60,0.3); color: #C4956A; }
+.fn-green { background: rgba(77,184,138,0.12); border: 1px solid rgba(77,184,138,0.25); color: #4DB88A; }
+.fn-label { font-size: 9px; color: var(--muted); letter-spacing: 0.04em; }
+.flow-arr {
+  display: flex; flex-direction: column; align-items: center;
+  width: 56px; flex-shrink: 0; margin-bottom: 28px;
+}
+.fa-lbl { font-size: 8px; font-weight: 600; color: var(--coral); margin-bottom: 4px; text-align: center; max-width: 50px; }
+.fa-line { display: flex; align-items: center; width: 100%; }
+.fa-shaft { flex: 1; height: 1.5px; background: var(--coral); }
+.fa-head { width: 0; height: 0; border-top: 4px solid transparent; border-bottom: 4px solid transparent; border-left: 7px solid var(--coral); }
+.fa-green .fa-lbl  { color: #4DB88A; }
+.fa-green .fa-shaft { background: #4DB88A; }
+.fa-green .fa-head  { border-left-color: #4DB88A; }
+
+/* ── DECISÕES ── */
+.decisions-grid {
+  display: grid; grid-template-columns: repeat(2, 1fr);
+  gap: 14px; margin-bottom: 32px;
+}
+.decision-card {
+  border-radius: 18px; padding: 28px;
+  border: 1px solid var(--bd);
+  background: var(--surface2);
+}
+.dc-num {
+  font-family: 'DM Serif Display', serif;
+  font-size: 36px; font-style: italic;
+  color: rgba(217,95,69,0.2); line-height: 1;
+  margin-bottom: 12px;
+}
+.dc-title { font-weight: 700; font-size: 16px; color: var(--text); margin-bottom: 8px; }
+.dc-desc { font-size: 13px; color: var(--muted); line-height: 1.6; margin-bottom: 12px; }
+.dc-highlight {
+  font-size: 12px; font-style: italic;
+  color: var(--coral); line-height: 1.5;
+  padding-left: 12px;
+  border-left: 2px solid var(--coral);
+}
+
+/* ── COMP TABLE ── */
+.comp-table {
+  width: 100%; border-collapse: collapse;
+  margin-bottom: 32px; font-size: 13px;
+}
+.comp-table th {
+  padding: 12px 16px; text-align: left;
+  font-size: 10px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.8px;
+  color: var(--muted); border-bottom: 1px solid var(--bd);
+}
+.comp-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid rgba(255,255,255,0.03);
+  color: var(--muted);
+}
+.comp-table tr:hover td { background: rgba(255,255,255,0.02); }
+.comp-table td:first-child { color: var(--text); font-weight: 600; }
+.yes  { color: #4DB88A !important; }
+.no   { color: #E05555 !important; }
+.part { color: #C4956A !important; }
+.star { color: var(--coral) !important; font-weight: 700 !important; }
+
+/* ── DIFERENCIAIS ── */
+.diff-row { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; }
+.diff-card {
+  border-radius: 18px; padding: 28px;
+  border: 1px solid var(--bd);
+  display: flex; flex-direction: column; gap: 12px;
+}
+.dc-coral { background: rgba(217,95,69,0.06); border-color: rgba(217,95,69,0.15); }
+.dc-navy  { background: rgba(28,43,74,0.3); border-color: rgba(46,63,98,0.4); }
+.dc-areia { background: rgba(232,221,208,0.06); border-color: rgba(232,221,208,0.12); }
+.diff-icon { font-size: 28px; }
+.diff-title { font-weight: 700; font-size: 16px; color: var(--text); }
+.diff-desc  { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+/* ── MODELO DE NEGÓCIO ── */
+.negocio-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 32px; }
+.negocio-card {
+  border-radius: 18px; overflow: hidden;
+  border: 1px solid var(--bd);
+}
+.nc-top {
+  padding: 24px; display: flex; flex-direction: column; gap: 8px;
+}
+.nc-coral { background: rgba(217,95,69,0.08); }
+.nc-navy  { background: rgba(28,43,74,0.3); }
+.nc-val {
+  font-family: 'DM Serif Display', serif;
+  font-size: 48px; font-style: italic; line-height: 1;
+}
+.ncv-coral { color: var(--coral); }
+.ncv-navy  { color: #7A8FCC; }
+.nc-title { font-weight: 700; font-size: 16px; color: var(--text); }
+.nc-desc  { font-size: 13px; color: var(--muted); line-height: 1.6; }
+.nc-bottom {
+  padding: 16px 24px;
+  background: var(--surface2);
+  border-top: 1px solid var(--bd);
+  font-size: 12px; color: var(--muted); font-style: italic; line-height: 1.5;
+}
+
+</style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav>
+  <div class="nav-logo">Traç<em>o</em></div>
+  <div class="nav-links">
+    <a href="#problema">Problema</a>
+    <a href="#pesquisa">Pesquisa</a>
+    <a href="#solucao">Solução</a>
+    <a href="#telas">Telas</a>
+    <a href="#decisoes">Decisões</a>
+    <a href="#negocio">Negócio</a>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <svg class="hero-deco" width="600" height="600" viewBox="0 0 600 600">
+    <circle cx="300" cy="300" r="60" stroke="#D95F45" stroke-width="1" fill="none"/>
+    <circle cx="300" cy="300" r="120" stroke="#D95F45" stroke-width="0.7" fill="none" opacity="0.6"/>
+    <circle cx="300" cy="300" r="200" stroke="#D95F45" stroke-width="0.4" fill="none" opacity="0.3"/>
+    <circle cx="300" cy="300" r="290" stroke="#D95F45" stroke-width="0.2" fill="none" opacity="0.15"/>
+  </svg>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Case Study · UX/UI Design</div>
+    <h1 class="hero-title">Traç<em>o</em></h1>
+    <p class="hero-tagline">A plataforma que o mercado de arquitetura brasileiro merece.</p>
+    <div class="hero-tags">
+      <span class="htag coral">UX Research</span>
+      <span class="htag coral">UI Design</span>
+      <span class="htag navy">Produto Digital</span>
+      <span class="htag navy">Marketplace</span>
+      <span class="htag muted">2025</span>
+    </div>
+    <div class="hero-meta">
+      <div class="hm-item"><div class="hm-label">Duração</div><div class="hm-val">8 semanas</div></div>
+      <div class="hm-item"><div class="hm-label">Plataforma</div><div class="hm-val">Mobile iOS</div></div>
+      <div class="hm-item"><div class="hm-label">Usuários pesquisados</div><div class="hm-val">18 pessoas</div></div>
+      <div class="hm-item"><div class="hm-label">Telas entregues</div><div class="hm-val">7 telas HiFi</div></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ PROBLEMA ══ -->
+<section id="problema">
+  <div class="sec-eyebrow">01 — Oportunidade</div>
+  <div class="sec-title">O problema que ninguém resolveu</div>
+  <div class="sec-sub">O mercado de arquitetura brasileiro conecta profissionais e clientes de forma fragmentada — indicações, Instagram e WhatsApp preenchem um gap que nenhuma plataforma especializada resolve.</div>
+
+  <div class="problem-grid">
+    <div class="problem-card pc-cliente">
+      <div class="pc-icon">🏠</div>
+      <div class="pc-title">Do lado do cliente</div>
+      <div class="pc-desc">Quem quer reformar não sabe por onde começar. Depende de indicações de amigos, garante portfólios no Instagram e torce para contratar alguém confiável. O processo é opaco, sem previsibilidade de custo ou prazo.</div>
+    </div>
+    <div class="problem-card pc-arq">
+      <div class="pc-icon">✏️</div>
+      <div class="pc-title">Do lado do arquiteto</div>
+      <div class="pc-desc">Talento não falta — captação é a dor crônica. A maioria dos profissionais depende quase exclusivamente de indicações, um canal imprevisível que seca nos momentos errados. O Instagram constrói audiência, não converte clientes.</div>
+    </div>
+  </div>
+
+  <div style="padding: 32px; background: var(--surface2); border-radius: 20px; border: 1px solid var(--bd); text-align: center;">
+    <div style="font-family:'DM Serif Display',serif; font-style:italic; font-size:22px; color:var(--text); margin-bottom:8px;">
+      "Dois públicos com problemas complementares — e nenhuma plataforma especializada que resolva os dois."
+    </div>
+    <div style="font-size:12px; color:var(--muted);">Insight central do projeto</div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ PESQUISA ══ -->
+<section id="pesquisa">
+  <div class="sec-eyebrow">02 — Pesquisa</div>
+  <div class="sec-title">Dados que validaram a oportunidade</div>
+  <div class="sec-sub">18 usuários entrevistados — 10 clientes e 8 arquitetos — para mapear comportamentos, dores e abertura para uma solução digital.</div>
+
+  <div class="stat-band">
+    <div class="stat-box">
+      <div class="stat-val sv-coral">100%</div>
+      <div class="stat-label">dos clientes usariam ou considerariam um app especializado</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-val sv-navy">75%</div>
+      <div class="stat-label">dos arquitetos usariam uma plataforma estruturada</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-val sv-areia">50%</div>
+      <div class="stat-label">dos arquitetos pagariam por maior visibilidade</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-val sv-green">45%</div>
+      <div class="stat-label">dos clientes decidem principalmente pelo portfólio</div>
+    </div>
+  </div>
+
+  <!-- PERSONAS -->
+  <div class="sec-eyebrow" style="margin-top:16px;">Personas</div>
+  <div class="sec-title">Quem o Traço serve</div>
+  <div class="sec-sub">Dois perfis com objetivos opostos que se complementam na plataforma.</div>
+
+  <div class="personas-row">
+    <div class="persona-card">
+      <div class="persona-top" style="background: var(--surface2);">
+        <div class="persona-avatar pa-coral">M</div>
+        <div class="persona-name">Mariana Oliveira</div>
+        <div class="persona-role">38 anos · Analista de RH · São Paulo</div>
+      </div>
+      <div class="persona-need">"Quero reformar meu apartamento, mas não sei como encontrar um arquiteto confiável sem depender de indicação."</div>
+      <div class="persona-body">
+        <div class="persona-item pi-pain">
+          <div class="pi-label">Dores</div>
+          <div class="pi-text">Medo de contratar errado · Não entende valores de mercado · Processo opaco sem previsibilidade · Comunicação lenta e descentralizada</div>
+        </div>
+        <div class="persona-item pi-gain">
+          <div class="pi-label">Ganhos esperados</div>
+          <div class="pi-text">Portfólios verificados para comparar · Orçamento estruturado e transparente · Processo guiado do início ao fim</div>
+        </div>
+      </div>
+    </div>
+    <div class="persona-card">
+      <div class="persona-top" style="background: rgba(28,43,74,0.4);">
+        <div class="persona-avatar pa-navy">R</div>
+        <div class="persona-name">Rafael Mendes</div>
+        <div class="persona-role">34 anos · Arquiteto autônomo · 6 anos de atuação</div>
+      </div>
+      <div class="persona-need">"Tenho projetos bons para mostrar, mas minha captação depende de indicações que nem sempre chegam na hora certa."</div>
+      <div class="persona-body">
+        <div class="persona-item pi-pain">
+          <div class="pi-label">Dores</div>
+          <div class="pi-text">Dependência total de indicações · Leads desorganizados por WhatsApp · Dificuldade de precificar e apresentar propostas</div>
+        </div>
+        <div class="persona-item pi-gain">
+          <div class="pi-label">Ganhos esperados</div>
+          <div class="pi-text">Canal estruturado de captação · Sistema de propostas organizado · Visibilidade profissional consistente</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ IDENTIDADE ══ -->
+<section id="solucao">
+  <div class="sec-eyebrow">03 — Identidade Visual</div>
+  <div class="sec-title">Cores e tipografia com intenção</div>
+  <div class="sec-sub">Cada decisão visual foi tomada para diferenciar o Traço de plataformas genéricas e posicioná-lo no universo sofisticado da arquitetura.</div>
+
+  <!-- CORES -->
+  <div style="margin-bottom:12px; font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:2px; color:var(--muted);">Paleta principal</div>
+  <div class="color-row">
+    <div class="color-chip">
+      <div class="cc-swatch" style="background:#1C2B4A;"></div>
+      <div class="cc-info">
+        <div class="cc-name">Navy</div>
+        <div class="cc-hex">#1C2B4A</div>
+        <div class="cc-role">Autoridade e confiança. Headers, painel, elementos institucionais.</div>
+      </div>
+    </div>
+    <div class="color-chip">
+      <div class="cc-swatch" style="background:#D95F45;"></div>
+      <div class="cc-info">
+        <div class="cc-name">Coral</div>
+        <div class="cc-hex">#D95F45</div>
+        <div class="cc-role">Ação e calor humano. CTAs, avaliações, destaques interativos.</div>
+      </div>
+    </div>
+    <div class="color-chip">
+      <div class="cc-swatch" style="background:#E8DDD0;"></div>
+      <div class="cc-info">
+        <div class="cc-name">Areia</div>
+        <div class="cc-hex">#E8DDD0</div>
+        <div class="cc-role">Materialidade. Evoca barro, terracota, papel de projeto.</div>
+      </div>
+    </div>
+    <div class="color-chip">
+      <div class="cc-swatch" style="background:#F7F4F0; border:1px solid rgba(255,255,255,0.08);"></div>
+      <div class="cc-info">
+        <div class="cc-name">Off-white</div>
+        <div class="cc-hex">#F7F4F0</div>
+        <div class="cc-role">Fundo dominante — levemente quente, nunca branco puro.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TIPOGRAFIA -->
+  <div class="typo-grid">
+    <div class="typo-card">
+      <div class="typo-sample">
+        <div class="ts-serif">Traç<em>o</em></div>
+      </div>
+      <div class="typo-name">DM Serif Display</div>
+      <div class="typo-sub">Títulos, logo e destaques editoriais · Google Fonts</div>
+      <div class="typo-roles">
+        <span class="trole tr-coral">Logo</span>
+        <span class="trole tr-coral">Hero</span>
+        <span class="trole tr-coral">Títulos</span>
+        <span class="trole tr-muted">Números</span>
+      </div>
+    </div>
+    <div class="typo-card">
+      <div class="typo-sample">
+        <div class="ts-outfit">Outfit</div>
+      </div>
+      <div class="typo-name">Outfit</div>
+      <div class="typo-sub">UI, corpo de texto e botões · Google Fonts</div>
+      <div class="typo-roles">
+        <span class="trole tr-navy">Botões</span>
+        <span class="trole tr-navy">Corpo</span>
+        <span class="trole tr-muted">Labels</span>
+        <span class="trole tr-muted">Captions</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="typo-scale">
+    <div style="font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:2px; color:var(--muted); margin-bottom:8px;">Escala tipográfica</div>
+    <div class="ts-row">
+      <span class="ts-size">32px</span>
+      <span class="ts-samp-serif" style="font-size:28px; color:var(--text);">Encontre o arquiteto certo</span>
+      <span class="ts-role-tag">Hero</span>
+    </div>
+    <div class="ts-row">
+      <span class="ts-size">20px</span>
+      <span class="ts-samp-serif" style="font-size:18px; color:var(--text);">Em destaque</span>
+      <span class="ts-role-tag">Título</span>
+    </div>
+    <div class="ts-row">
+      <span class="ts-size">15px</span>
+      <span class="ts-samp-serif" style="font-size:14px; color:var(--text);">Próximos de você</span>
+      <span class="ts-role-tag" style="background:rgba(28,43,74,0.3);color:#7A8FCC;">Seção</span>
+    </div>
+    <div class="ts-row">
+      <span class="ts-size">14px</span>
+      <span class="ts-samp-out" style="font-size:13px; color:var(--muted);">Texto corrido e descrições de perfil</span>
+      <span class="ts-role-tag" style="background:rgba(255,255,255,0.06);color:var(--muted);">Corpo</span>
+    </div>
+    <div class="ts-row">
+      <span class="ts-size">11px</span>
+      <span class="ts-samp-out" style="font-size:11px; color:var(--muted); font-weight:500;">Botões · Labels · Actions</span>
+      <span class="ts-role-tag" style="background:rgba(255,255,255,0.06);color:var(--muted);">UI</span>
+    </div>
+    <div class="ts-row">
+      <span class="ts-size">10px</span>
+      <span class="ts-samp-out" style="font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:0.08em; font-weight:600;">CATEGORIAS · EYEBROWS</span>
+      <span class="ts-role-tag" style="background:rgba(255,255,255,0.06);color:var(--muted);">Caps</span>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ TELAS ══ -->
+<section id="telas" class="full">
+  <div style="max-width:1100px; margin:0 auto 40px; padding:0 40px;">
+    <div class="sec-eyebrow">04 — Protótipo</div>
+    <div class="sec-title">As 7 telas em alta fidelidade</div>
+    <div class="sec-sub">Dois fluxos paralelos — cliente e arquiteto — que se bifurcam no cadastro e convergem no mesmo ecossistema.</div>
+  </div>
+
+  <div class="phones-scroll">
+
+    <!-- ENTRADA -->
+    <div class="pw">
+      <div class="phone">
+        <div class="notch"></div>
+        <div class="scr">
+          <div class="sb sb-d"><span>9:41</span><span>●●● 🔋</span></div>
+          <div class="entrada-bg">
+            <div class="ent-logo">Traç<em>o</em></div>
+            <div>
+              <div class="ent-eyebrow">Plataforma de arquitetura</div>
+              <div class="ent-title">O lugar onde projetos <em>ganham vida</em></div>
+            </div>
+            <div>
+              <div class="ent-btn">Criar minha conta</div>
+              <div style="margin-top:6px;" class="ent-btn2">Já tenho conta — entrar</div>
+              <div class="ent-legal">Ao continuar você concorda com os Termos de Uso e a Política de Privacidade do Traço.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="plbl">01 · Entrada</div>
+    </div>
+
+    <!-- HOME CLIENTE -->
+    <div class="pw">
+      <div class="phone">
+        <div class="notch"></div>
+        <div class="scr">
+          <div class="sb sb-d"><span>9:41</span><span>●●● 🔋</span></div>
+          <div class="home-hdr">
+            <div class="hh-logo">Traç<em>o</em></div>
+            <div class="hh-title">Ache o arquiteto <em>certo</em> para o seu projeto</div>
+            <div class="hh-search">🔍  Especialidade ou cidade...</div>
+          </div>
+          <div class="home-body">
+            <div class="hb-filters">
+              <div class="hbf on">Todos</div>
+              <div class="hbf">Residencial</div>
+              <div class="hbf">Interiores</div>
+              <div class="hbf">Reforma</div>
+            </div>
+            <div class="hb-sec">Em destaque</div>
+            <div class="hb-cards">
+              <div class="hb-card"><div class="hbc-img hci-a">ML</div><div class="hbc-info"><div class="hbc-name">Marina L.</div><div class="hbc-spec">Residencial · SP</div></div></div>
+              <div class="hb-card"><div class="hbc-img hci-b">RS</div><div class="hbc-info"><div class="hbc-name">Rafael S.</div><div class="hbc-spec">Interiores · RJ</div></div></div>
+              <div class="hb-card"><div class="hbc-img hci-c">CM</div><div class="hbc-info"><div class="hbc-name">Clara M.</div><div class="hbc-spec">Reforma · BH</div></div></div>
+            </div>
+            <div class="hb-sec">Próximos de você</div>
+            <div class="hb-list">
+              <div class="hbl-item">
+                <div class="hbl-av hbl-av-a">T</div>
+                <div class="hbl-info"><div class="hbl-name">Thiago Farias</div><div class="hbl-spec">Residencial · São Paulo</div></div>
+                <div class="hbl-price">a partir de<br>R$ 4.800</div>
+              </div>
+              <div class="hbl-item">
+                <div class="hbl-av hbl-av-b">J</div>
+                <div class="hbl-info"><div class="hbl-name">Julia Steiner</div><div class="hbl-spec">Interiores · São Paulo</div></div>
+                <div class="hbl-price">a partir de<br>R$ 3.200</div>
+              </div>
+            </div>
+          </div>
+          <div class="bnv">
+            <div class="ni on"><div class="nii">🏠</div>Início<div class="ndot"></div></div>
+            <div class="ni"><div class="nii">🔍</div>Buscar</div>
+            <div class="ni"><div class="nii">📋</div>Projetos</div>
+            <div class="ni"><div class="nii">👤</div>Perfil</div>
+          </div>
+        </div>
+      </div>
+      <div class="plbl">02 · Home cliente</div>
+    </div>
+
+    <!-- PERFIL ARQUITETO -->
+    <div class="pw">
+      <div class="phone">
+        <div class="notch"></div>
+        <div class="scr">
+          <div class="sb sb-l" style="background:rgba(28,43,74,0.95); color:rgba(255,255,255,0.4);"><span>9:41</span><span>●●● 🔋</span></div>
+          <div class="perf-cover"><div class="perf-av">R</div></div>
+          <div class="perf-body">
+            <div class="perf-name">Rafael Cardoso</div>
+            <div class="perf-spec">Arquiteto · São Paulo, SP</div>
+            <div class="perf-tags">
+              <span class="perf-tag pt-n">Residencial</span>
+              <span class="perf-tag pt-a">Interiores</span>
+              <span class="perf-tag pt-c">Reforma</span>
+            </div>
+            <div class="perf-rating">
+              <div class="perf-r-big">4.0</div>
+              <div>
+                <div class="perf-r-stars">★★★★☆</div>
+                <div class="perf-r-count">11 avaliações</div>
+              </div>
+            </div>
+            <div class="perf-grid">
+              <div class="pg-item"><div class="pg-img pgi-a"></div><div class="pg-lbl">Casa Jardins</div></div>
+              <div class="pg-item"><div class="pg-img pgi-b"></div><div class="pg-lbl">Estúdio Itaim</div></div>
+              <div class="pg-item"><div class="pg-img pgi-c"></div><div class="pg-lbl">Apto. Moema</div></div>
+              <div class="pg-item"><div class="pg-img pgi-d"></div><div class="pg-lbl">Villa Verde</div></div>
+            </div>
+            <div class="perf-btn">Solicitar orçamento</div>
+          </div>
+        </div>
+      </div>
+      <div class="plbl">03 · Perfil arquiteto</div>
+    </div>
+
+    <!-- ORÇAMENTO -->
+    <div class="pw">
+      <div class="phone">
+        <div class="notch"></div>
+        <div class="scr">
+          <div class="sb sb-w"><span>9:41</span><span>●●● 🔋</span></div>
+          <div class="orc-hdr">
+            <div class="orc-arch-row">
+              <div class="orc-av">R</div>
+              <div class="orc-name">Rafael Cardoso</div>
+              <span class="orc-badge">Responde em 2h</span>
+            </div>
+            <div class="orc-steps">
+              <div class="orc-sc osc-done">✓</div>
+              <div class="orc-sl osl-done"></div>
+              <div class="orc-sc osc-act">2</div>
+              <div class="orc-sl osl-off"></div>
+              <div class="orc-sc osc-todo">3</div>
+            </div>
+          </div>
+          <div class="orc-body">
+            <div class="ob-sec">Tipo de projeto</div>
+            <div class="ob-pills">
+              <div class="ob-pill sel">Residencial</div>
+              <div class="ob-pill sel2">Reforma</div>
+              <div class="ob-pill">Interiores</div>
+              <div class="ob-pill">Comercial</div>
+            </div>
+            <div class="ob-field act">Área: 120 m²</div>
+            <div class="ob-field">São Paulo, SP</div>
+            <div class="ob-textarea">Quero reformar meu apê de 120m² no Itaim, mantendo a planta mas modernizando a cozinha...</div>
+            <div style="margin-bottom:8px;">
+              <div style="font-family:'DM Serif Display',serif; font-size:10px; color:#1C2B4A; margin-bottom:5px;">Prazo desejado</div>
+              <div style="display:flex; gap:4px;">
+                <div style="flex:1; text-align:center; font-size:7px; font-weight:600; padding:5px 3px; border-radius:6px; border:1px solid #E2DDD6; background:#fff; color:#6B6762;">Urgente</div>
+                <div style="flex:1; text-align:center; font-size:7px; font-weight:600; padding:5px 3px; border-radius:6px; background:#E8DDD0; border:1px solid #A8907A; color:#A8907A;">3–6 m</div>
+                <div style="flex:1; text-align:center; font-size:7px; font-weight:600; padding:5px 3px; border-radius:6px; border:1px solid #E2DDD6; background:#fff; color:#6B6762;">6–12 m</div>
+                <div style="flex:1; text-align:center; font-size:7px; font-weight:600; padding:5px 3px; border-radius:6px; border:1px solid #E2DDD6; background:#fff; color:#6B6762;">Sem pressa</div>
+              </div>
+            </div>
+            <div class="ob-btn">Solicitar orçamento</div>
+          </div>
+        </div>
+      </div>
+      <div class="plbl">04 · Solicitar orçamento</div>
+    </div>
+
+    <!-- CONFIRMAÇÃO -->
+    <div class="pw">
+      <div class="phone">
+        <div class="notch"></div>
+        <div class="scr">
+          <div class="sb sb-l"><span>9:41</span><span>●●● 🔋</span></div>
+          <div class="conf-body">
+            <div class="conf-icon">✅</div>
+            <div class="conf-title">Orçamento solicitado!</div>
+            <div class="conf-sub">Sua solicitação foi enviada para Rafael Cardoso. Ele vai analisar e retornar em breve.</div>
+            <div class="conf-tl">
+              <div class="conf-tl-item"><div class="conf-tl-dot ctd-g">✓</div><div class="conf-tl-text"><strong>Enviado</strong> · Agora</div></div>
+              <div class="conf-tl-item"><div class="conf-tl-dot ctd-w">⏱</div><div class="conf-tl-text"><strong>Arquiteto analisa</strong> · até 2h</div></div>
+              <div class="conf-tl-item"><div class="conf-tl-dot ctd-w">💬</div><div class="conf-tl-text"><strong>Você recebe</strong> o orçamento</div></div>
+              <div class="conf-tl-item"><div class="conf-tl-dot ctd-w">🤝</div><div class="conf-tl-text"><strong>Decide</strong> · sem compromisso</div></div>
+            </div>
+            <div class="conf-btn">Ver minha solicitação</div>
+          </div>
+        </div>
+      </div>
+      <div class="plbl">05 · Confirmação</div>
+    </div>
+
+    <!-- MONTE SEU PERFIL -->
+    <div class="pw">
+      <div class="phone">
+        <div class="notch"></div>
+        <div class="scr">
+          <div class="sb sb-d"><span>9:41</span><span>●●● 🔋</span></div>
+          <div class="pain-hdr" style="border-radius:0;">
+            <div class="pain-top" style="margin-bottom:6px;">
+              <div>
+                <div class="pain-hi">Passo 3 de 4</div>
+                <div class="pain-name">Monte seu perfil</div>
+              </div>
+            </div>
+            <div style="display:flex; gap:4px;">
+              <div style="flex:1; height:3px; border-radius:2px; background:var(--coral);"></div>
+              <div style="flex:1; height:3px; border-radius:2px; background:var(--coral);"></div>
+              <div style="flex:1; height:3px; border-radius:2px; background:rgba(217,95,69,0.4);"></div>
+              <div style="flex:1; height:3px; border-radius:2px; background:rgba(255,255,255,0.15);"></div>
+            </div>
+          </div>
+          <div style="flex:1; padding:10px 14px; background:#F7F4F0; overflow:hidden;">
+            <div style="font-family:'DM Serif Display',serif; font-size:10px; color:#1C2B4A; margin-bottom:7px;">Foto de Perfil</div>
+            <div style="background:#fff; border:1px solid #E2DDD6; border-radius:9px; padding:8px 10px; display:flex; align-items:center; gap:8px; margin-bottom:10px;">
+              <div style="width:30px; height:30px; border-radius:8px; background:#E8DDD0; border:1.5px dashed #A8907A; display:flex; align-items:center; justify-content:center; font-size:13px;">📷</div>
+              <div><div style="font-size:8px; font-weight:700; color:#1A1917;">Adicionar foto</div><div style="font-size:7px; color:#A8A49F;">JPG ou PNG · máx. 5MB</div></div>
+            </div>
+            <div style="font-family:'DM Serif Display',serif; font-size:10px; color:#1C2B4A; margin-bottom:6px;">Especialidade</div>
+            <div style="display:flex; flex-wrap:wrap; gap:4px; margin-bottom:10px;">
+              <span style="font-size:7px; font-weight:600; padding:3px 8px; border-radius:10px; background:#1C2B4A; border:1px solid #1C2B4A; color:#fff;">Residencial</span>
+              <span style="font-size:7px; font-weight:600; padding:3px 8px; border-radius:10px; background:#F5EDE9; border:1px solid var(--coral); color:var(--coral);">Interiores</span>
+              <span style="font-size:7px; font-weight:600; padding:3px 8px; border-radius:10px; background:#fff; border:1px solid #E2DDD6; color:#6B6762;">Comercial</span>
+              <span style="font-size:7px; font-weight:600; padding:3px 8px; border-radius:10px; background:#fff; border:1px solid #E2DDD6; color:#6B6762;">Reforma</span>
+              <span style="font-size:7px; font-weight:600; padding:3px 8px; border-radius:10px; background:#1C2B4A; border:1px solid #1C2B4A; color:#fff;">Sustentável</span>
+            </div>
+            <div style="font-family:'DM Serif Display',serif; font-size:10px; color:#1C2B4A; margin-bottom:6px;">Portfólio</div>
+            <div style="display:flex; gap:5px; margin-bottom:10px;">
+              <div style="width:54px; height:48px; border-radius:8px; background:linear-gradient(135deg,#D4C4B0,#B89A7A); border:1px solid #E2DDD6;"></div>
+              <div style="width:54px; height:48px; border-radius:8px; background:linear-gradient(135deg,#C4D0D8,#A0B8C8); border:1px solid #E2DDD6;"></div>
+              <div style="width:54px; height:48px; border-radius:8px; background:#F7F4F0; border:1.5px dashed #E2DDD6; display:flex; align-items:center; justify-content:center; font-size:16px; color:#A8A49F;">+</div>
+            </div>
+            <div style="background:var(--coral); color:#fff; font-family:'Outfit',sans-serif; font-size:9px; font-weight:600; padding:9px 0; border-radius:8px; text-align:center; display:flex; align-items:center; justify-content:center; gap:5px;">Próximo passo →</div>
+          </div>
+        </div>
+      </div>
+      <div class="plbl">06 · Cadastro arquiteto</div>
+    </div>
+
+    <!-- PAINEL ARQUITETO -->
+    <div class="pw">
+      <div class="phone">
+        <div class="notch"></div>
+        <div class="scr">
+          <div class="sb sb-d"><span>9:41</span><span>●●● 🔋</span></div>
+          <div class="pain-hdr">
+            <div class="pain-top">
+              <div><div class="pain-hi">Seu painel</div><div class="pain-name">Rafael Cardoso</div></div>
+              <div class="pain-av">R</div>
+            </div>
+            <div class="pain-stats">
+              <div class="pain-stat"><div class="ps-val">8</div><div class="ps-lbl">Ativos</div></div>
+              <div class="pain-stat"><div class="ps-val c">4.9</div><div class="ps-lbl">Aval.</div></div>
+              <div class="pain-stat"><div class="ps-val a">32</div><div class="ps-lbl">Feitos</div></div>
+            </div>
+          </div>
+          <div class="pain-body">
+            <div class="pb-sec">Em andamento</div>
+            <div class="pb-proj"><div class="pb-proj-ic pic-c">🏠</div><div class="pb-proj-info"><div class="pb-pn">Residência Jardins</div><div class="pb-pd">Entrega · 12 Jun</div></div><span class="pb-badge pbg-g">Em dia</span></div>
+            <div class="pb-proj"><div class="pb-proj-ic pic-n">🏢</div><div class="pb-proj-info"><div class="pb-pn">Escritório Pinheiros</div><div class="pb-pd">Entrega · 28 Jul</div></div><span class="pb-badge pbg-c">Revisão</span></div>
+            <div class="pb-proj"><div class="pb-proj-ic pic-a">🛋️</div><div class="pb-proj-info"><div class="pb-pn">Apartamento Moema</div><div class="pb-pd">Entrega · 03 Ago</div></div><span class="pb-badge" style="background:#E8DDD0;color:#A8907A;">Proposta</span></div>
+            <div style="margin-top:8px;">
+              <div class="pb-sec">Avaliações recentes</div>
+              <div class="pb-review"><div class="pb-rv-top"><span class="pb-rv-name">Carlos Mendonça</span><span class="pb-rv-stars">★★★★★</span></div><div class="pb-rv-text">"Trabalho impecável, entregou antes do prazo."</div></div>
+              <div class="pb-review"><div class="pb-rv-top"><span class="pb-rv-name">Fernanda Lima</span><span class="pb-rv-stars">★★★★★</span></div><div class="pb-rv-text">"Soube captar exatamente o que queríamos."</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="plbl">07 · Painel arquiteto</div>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ FLUXO ══ -->
+<section id="decisoes">
+  <div class="sec-eyebrow">05 — Navegabilidade</div>
+  <div class="sec-title">Como os fluxos se conectam</div>
+  <div class="sec-sub">O cadastro é o ponto de bifurcação. A partir da escolha de perfil, cada usuário entra em uma jornada desenhada especificamente para seus objetivos.</div>
+
+  <div style="margin-bottom:40px;">
+    <div style="font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:var(--coral); margin-bottom:12px;">Fluxo cliente</div>
+    <div class="flow-diagram">
+      <div class="flow-node"><div class="fn-box fn-coral">Entrada<br>+ Cadastro</div><div class="fn-label">01</div></div>
+      <div class="flow-arr"><div class="fa-lbl">Escolhe cliente</div><div class="fa-line"><div class="fa-shaft"></div><div class="fa-head"></div></div></div>
+      <div class="flow-node"><div class="fn-box fn-navy">Home<br>+ Busca</div><div class="fn-label">02</div></div>
+      <div class="flow-arr"><div class="fa-lbl">Seleciona arquiteto</div><div class="fa-line"><div class="fa-shaft"></div><div class="fa-head"></div></div></div>
+      <div class="flow-node"><div class="fn-box fn-brown">Perfil<br>+ Portfólio</div><div class="fn-label">03</div></div>
+      <div class="flow-arr"><div class="fa-lbl">Solicita orçamento</div><div class="fa-line"><div class="fa-shaft"></div><div class="fa-head"></div></div></div>
+      <div class="flow-node"><div class="fn-box fn-coral">Formulário<br>3 passos</div><div class="fn-label">04</div></div>
+      <div class="flow-arr"><div class="fa-lbl">Confirma envio</div><div class="fa-line"><div class="fa-shaft"></div><div class="fa-head"></div></div></div>
+      <div class="flow-node"><div class="fn-box fn-green">Confirmação<br>+ Timeline</div><div class="fn-label">05</div></div>
+    </div>
+  </div>
+
+  <div>
+    <div style="font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:#4DB88A; margin-bottom:12px;">Fluxo arquiteto</div>
+    <div class="flow-diagram">
+      <div class="flow-node"><div class="fn-box fn-coral">Entrada<br>+ Cadastro</div><div class="fn-label">01</div></div>
+      <div class="flow-arr fa-green"><div class="fa-lbl">Escolhe arquiteto</div><div class="fa-line"><div class="fa-shaft"></div><div class="fa-head"></div></div></div>
+      <div class="flow-node"><div class="fn-box fn-navy">Monte<br>seu Perfil</div><div class="fn-label">06</div></div>
+      <div class="flow-arr fa-green"><div class="fa-lbl">Conclui onboarding</div><div class="fa-line"><div class="fa-shaft"></div><div class="fa-head"></div></div></div>
+      <div class="flow-node"><div class="fn-box fn-green">Painel<br>do Arquiteto</div><div class="fn-label">07</div></div>
+    </div>
+  </div>
+
+  <!-- DECISÕES -->
+  <div style="margin-top:56px;">
+    <div class="sec-eyebrow">Decisões de design</div>
+    <div class="sec-title">Por que o produto funciona assim</div>
+    <div class="sec-sub" style="margin-bottom:32px;">Cada escolha de fluxo tem uma razão de produto por trás.</div>
+  </div>
+
+  <div class="decisions-grid">
+    <div class="decision-card">
+      <div class="dc-num">01</div>
+      <div class="dc-title">Bifurcação no cadastro</div>
+      <div class="dc-desc">Cliente e arquiteto têm objetivos completamente opostos. Forçar o mesmo onboarding para os dois criaria fricção desnecessária e uma experiência genérica para ambos.</div>
+      <div class="dc-highlight">A seleção de perfil na tela 2 define toda a jornada seguinte — é o design mais crítico do produto.</div>
+    </div>
+    <div class="decision-card">
+      <div class="dc-num">02</div>
+      <div class="dc-title">Perfil antes do orçamento</div>
+      <div class="dc-desc">O usuário precisa de confiança antes da ação. Ver portfólio, avaliações e especialidades reduz a fricção da decisão de alto valor — ninguém solicita orçamento de quem não conhece.</div>
+      <div class="dc-highlight">A tela de perfil é a tela de conversão real do produto.</div>
+    </div>
+    <div class="decision-card">
+      <div class="dc-num">03</div>
+      <div class="dc-title">Orçamento, não contratação</div>
+      <div class="dc-desc">Arquitetura é um serviço de alto valor e alta personalização. Forçar uma contratação direta criaria ansiedade e altas taxas de abandono. O fluxo de orçamento respeita o processo real do setor.</div>
+      <div class="dc-highlight">O teste de usabilidade confirmou: "Contratar" assustava. "Solicitar orçamento" convertia.</div>
+    </div>
+    <div class="decision-card">
+      <div class="dc-num">04</div>
+      <div class="dc-title">Painel fecha o ecossistema</div>
+      <div class="dc-desc">Uma plataforma de dois lados precisa ser útil para os dois lados. O painel do arquiteto com métricas, projetos e avaliações garante que o profissional tenha razão para usar o Traço todo dia.</div>
+      <div class="dc-highlight">Retenção do arquiteto = mais oferta = melhor experiência para o cliente.</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ CONCORRENTES ══ -->
+<section>
+  <div class="sec-eyebrow">06 — Mercado</div>
+  <div class="sec-title">Análise de concorrentes</div>
+  <div class="sec-sub">O Traço ocupa um nicho específico: uma plataforma especializada em arquitetura com portfólio, orçamento estruturado e gestão de projetos para os dois lados.</div>
+
+  <table class="comp-table">
+    <thead>
+      <tr>
+        <th>Plataforma</th>
+        <th>Foco em arquitetura</th>
+        <th>Solicitação guiada</th>
+        <th>Painel do profissional</th>
+        <th>O que falta</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Instagram</td><td class="no">❌ Não</td><td class="no">❌ Não</td><td class="no">❌ Não</td><td>Audiência ≠ cliente qualificado</td></tr>
+      <tr><td>GetNinjas</td><td class="part">⚠️ Parcial</td><td class="part">⚠️ Básico</td><td class="part">⚠️ Básico</td><td>Genérico demais, sem portfólio editorial</td></tr>
+      <tr><td>Habitissimo</td><td class="yes">✅ Sim</td><td class="part">⚠️ Form. básico</td><td class="no">❌ Não</td><td>Sem gestão de projetos ou painel</td></tr>
+      <tr><td>LinkedIn</td><td class="no">❌ Não</td><td class="no">❌ Não</td><td class="part">⚠️ Parcial</td><td>Não é para contratação de serviços criativos</td></tr>
+      <tr><td>Indicações / boca a boca</td><td class="yes">✅ Sim</td><td class="no">❌ Não</td><td class="no">❌ Não</td><td>Imprevisível e não escalável</td></tr>
+      <tr><td>Traço ✦</td><td class="star">✅ Especializado</td><td class="star">✅ 3 passos guiados</td><td class="star">✅ Métricas + projetos</td><td class="star">— Diferencial único no mercado</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ DIFERENCIAIS ══ -->
+<section>
+  <div class="sec-eyebrow">07 — Posicionamento</div>
+  <div class="sec-title">Por que o Traço é diferente</div>
+  <div class="sec-sub" style="margin-bottom:40px;">A combinação de três elementos que nenhuma plataforma brasileira oferece ao mesmo tempo.</div>
+
+  <div class="diff-row">
+    <div class="diff-card dc-coral">
+      <div class="diff-icon">🎯</div>
+      <div class="diff-title">Especialização que gera confiança</div>
+      <div class="diff-desc">Uma plataforma feita só para arquitetura — com identidade visual, linguagem e fluxos que pertencem ao universo criativo do setor.</div>
+    </div>
+    <div class="diff-card dc-navy">
+      <div class="diff-icon">🔄</div>
+      <div class="diff-title">Dois lados, um ecossistema</div>
+      <div class="diff-desc">O Traço serve cliente e arquiteto com igual profundidade. Não é um diretório — é uma plataforma que cria valor para quem contrata e para quem projeta.</div>
+    </div>
+    <div class="diff-card dc-areia">
+      <div class="diff-icon">🛡️</div>
+      <div class="diff-title">Processo guiado e seguro</div>
+      <div class="diff-desc">Do orçamento ao contrato, tudo dentro da plataforma. Sem DM no Instagram, sem WhatsApp desorganizado — um fluxo que dá segurança para os dois lados.</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ MODELO DE NEGÓCIO ══ -->
+<section id="negocio" style="padding-bottom:120px;">
+  <div class="sec-eyebrow">08 — Negócio</div>
+  <div class="sec-title">Como o Traço gera receita</div>
+  <div class="sec-sub" style="margin-bottom:40px;">Um modelo alinhado com o sucesso do arquiteto — a plataforma só ganha quando o profissional ganha.</div>
+
+  <div class="negocio-grid">
+    <div class="negocio-card">
+      <div class="nc-top nc-coral">
+        <div class="nc-val ncv-coral">2–3%</div>
+        <div class="nc-title">Comissão por projeto fechado</div>
+        <div class="nc-desc">A plataforma cobra uma comissão sobre o valor do projeto quando o contrato é formalizado dentro do Traço. Nenhuma mensalidade obrigatória.</div>
+      </div>
+      <div class="nc-bottom">O Traço só ganha quando o arquiteto ganha — alinhamento real entre plataforma e profissional.</div>
+    </div>
+    <div class="negocio-card">
+      <div class="nc-top nc-navy">
+        <div class="nc-val ncv-navy">50%</div>
+        <div class="nc-title">Plano de destaque (freemium)</div>
+        <div class="nc-desc">Qualquer arquiteto pode criar perfil gratuitamente. Quem quer aparecer na primeira página da home paga uma assinatura mensal. A pesquisa mostra que 50% pagariam por visibilidade.</div>
+      </div>
+      <div class="nc-bottom">Portfólio livre para todos. Visibilidade ampliada para quem investe no crescimento.</div>
+    </div>
+  </div>
+
+  <div style="margin-top:40px; text-align:center; padding:48px 40px; background:var(--surface2); border-radius:20px; border:1px solid var(--bd);">
+    <div style="display:flex; align-items:center; justify-content:center; gap:16px; margin-bottom:16px;">
+      <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+        <path d="M10 32L20 8L30 32H10Z" stroke="#D95F45" stroke-width="1.5" fill="none"/>
+        <rect x="16" y="26" width="8" height="6" stroke="#D95F45" stroke-width="1" fill="none"/>
+        <circle cx="20" cy="6" r="2" fill="#D95F45"/>
+      </svg>
+      <span style="font-family:'DM Serif Display',serif; font-size:40px; color:var(--text); letter-spacing:-1px;">Traç<em style="color:var(--coral); font-style:italic;">o</em></span>
+    </div>
+    <div style="font-family:'DM Serif Display',serif; font-style:italic; font-size:20px; color:rgba(238,240,248,0.4); margin-bottom:12px;">A plataforma que o mercado de arquitetura brasileiro merece.</div>
+    <div style="font-size:11px; color:#2a2a3a; font-weight:600; text-transform:uppercase; letter-spacing:1px;">Case Study · Portfólio · UX/UI Design 2025</div>
+  </div>
+</section>
+
+</body>
+</html>
